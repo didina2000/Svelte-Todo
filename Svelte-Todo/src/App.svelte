@@ -1,1 +1,5 @@
-<h1>Hello, World 👋</h1>
+<script lang="ts">
+  import Todo from "$root/components/Todo.svelte";
+</script>
+
+<Todo />
