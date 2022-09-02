@@ -3,13 +3,46 @@
 
   type CompleteTodoType = (id: string) => void;
   type RemoveTodoType = (id: string) => void;
+  type EditTodoType = (id: string, newTodo: string) => void;
 
   export let todo: ITodo;
   export let completeTodo: CompleteTodoType;
   export let removeTodo: RemoveTodoType;
+  export let editTodo: EditTodoType;
+
+  let editing = false;
+
+  function toggleEdit(): void {
+    editing = true;
+  }
+
+  const handleEdit = (event: KeyboardEvent, id: string): void => {
+    let pressedKey = event.key;
+    let targetElement = event.target as HTMLInputElement;
+    let newTodo = targetElement.value;
+
+    switch (pressedKey) {
+      case "Escape":
+        targetElement.blur();
+        break;
+      case "Enter":
+        editTodo(id, newTodo);
+        targetElement.blur();
+        break;
+    }
+  };
+
+  const handleBlur = (event: FocusEvent, id: string): void => {
+    let targetElement = event.target as HTMLInputElement;
+    let newTodo = targetElement.value;
+
+    editTodo(id, newTodo);
+    targetElement.blur();
+    editing = false;
+  };
 </script>
 
-<li class="todo">
+<li class:editing class="todo">
   <div class="todo-item">
     <div>
       <input
@@ -22,13 +55,25 @@
       <label aria-label="Check todo" class="todo-check" for="todo"></label>
     </div>
 
-    <span class:completed="{todo.completed}" class="todo-text">{todo.text}</span
+    <span
+      on:dblclick="{toggleEdit}"
+      class:completed="{todo.completed}"
+      class="todo-text">{todo.text}</span
     >
     <button
       aria-label="Remove todo"
       on:click="{() => removeTodo(todo.id)}"
       class="remove"></button>
   </div>
+  {#if editing}
+    <input
+      on:keydown="{(event) => handleEdit(event, todo.id)}"
+      on:blur="{(event) => handleBlur(event, todo.id)}"
+      class="edit"
+      type="text"
+      value="{todo.text}"
+    />
+  {/if}
 </li>
 
 <style>
