@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ITodo } from "$root/types/todo";
+  import type { ITodo } from "src/types/todo";
 
   type CompleteTodoType = (id: string) => void;
   type RemoveTodoType = (id: string) => void;

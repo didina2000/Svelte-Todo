@@ -1,7 +1,8 @@
 <script lang="ts">
-  import type { ITodo } from "$root/types/todo";
   import AddTodo from "./AddTodo.svelte";
   import Todo from "./Todo.svelte";
+  import type { FiltersType, ITodo } from "src/types/todo";
+  import FilterTodos from "./FilterTodos.svelte";
 
   let todos: ITodo[] = [
     { id: "1", text: "Todo 1", completed: true },
@@ -10,7 +11,10 @@
     { id: "4", text: "Todo 4", completed: false },
   ];
 
+  let selectedFilter: FiltersType = "all";
+
   $: todosAmount = todos.length;
+  $: filteredTodos = filterTodos(todos, selectedFilter);
 
   const generateRandomId = (): string => {
     return Math.random().toString(16).slice(2);
@@ -51,6 +55,21 @@
     let currentTodo = todos.findIndex((todo) => todo.id === id);
     todos[currentTodo].text = newTodo;
   };
+
+  const setFilter = (newFilter: FiltersType): void => {
+    selectedFilter = newFilter;
+  };
+
+  const filterTodos = (todos: ITodo[], filter: FiltersType): ITodo[] => {
+    switch (filter) {
+      case "all":
+        return todos;
+      case "active":
+        return todos.filter((todo) => !todo.completed);
+      case "completed":
+        return todos.filter((todo) => todo.completed);
+    }
+  };
 </script>
 
 <main>
@@ -64,7 +83,7 @@
     />
     {#if todosAmount}
       <ul class="todo-list">
-        {#each todos as todo (todo.id)}
+        {#each filteredTodos as todo (todo.id)}
           <Todo
             todo="{todo}"
             completeTodo="{completeTodo}"
@@ -76,11 +95,11 @@
 
       <div class="actions">
         <span class="todo-count">0 left</span>
-        <div class="filters">
-          <button class="filter">All</button>
-          <button class="filter">Active</button>
-          <button class="filter">Completed</button>
-        </div>
+        <FilterTodos
+          selectedFilter="{selectedFilter}"
+          setFilter="{setFilter}"
+        />
+
         <button class="clear-completed">Clear completed</button>
       </div>
     {/if}
