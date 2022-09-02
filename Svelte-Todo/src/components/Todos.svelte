@@ -42,6 +42,10 @@
       return todo;
     });
   };
+
+  const removeTodo = (id: string): void => {
+    todos = todos.filter((todo) => todo.id !== id);
+  };
 </script>
 
 <main>
@@ -56,23 +60,11 @@
     {#if todosAmount}
       <ul class="todo-list">
         {#each todos as todo (todo.id)}
-          <Todo todo="{todo}" completeTodo="{completeTodo}" />
-          <li class="todo">
-            <div class="todo-item">
-              <div>
-                <input
-                  checked="{todo.completed}"
-                  id="todo"
-                  class="toggle"
-                  type="checkbox"
-                />
-                <label aria-label="Check todo" class="todo-check" for="todo"
-                ></label>
-              </div>
-              <span class="todo-text">{todo.text}</span>
-              <button aria-label="Remove todo" class="remove"></button>
-            </div>
-          </li>
+          <Todo
+            todo="{todo}"
+            completeTodo="{completeTodo}"
+            removeTodo="{removeTodo}"
+          />
         {/each}
       </ul>
 
