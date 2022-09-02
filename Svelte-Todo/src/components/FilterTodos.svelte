@@ -1,0 +1,22 @@
+<script lang="ts">
+  import type { FiltersType } from "src/types/todo";
+
+  type SetFilterType = (newFilter: string) => void;
+
+  export let selectedFilter: FiltersType;
+  export let setFilter: SetFilterType;
+
+  let filters = ["all", "active", "completed"];
+</script>
+
+<div class="filters">
+  {#each filters as filter}
+    <button
+      on:click="{() => setFilter(filter)}"
+      class:selected="{selectedFilter === filter}"
+      class="filter"
+    >
+      {filter}
+    </button>
+  {/each}
+</div>
