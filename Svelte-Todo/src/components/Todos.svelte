@@ -3,6 +3,7 @@
   import Todo from "./Todo.svelte";
   import type { FiltersType, ITodo } from "src/types/todo";
   import FilterTodos from "./FilterTodos.svelte";
+  import ClearTodos from "./ClearTodos.svelte";
 
   let todos: ITodo[] = [
     { id: "1", text: "Todo 1", completed: true },
@@ -15,6 +16,7 @@
 
   $: todosAmount = todos.length;
   $: filteredTodos = filterTodos(todos, selectedFilter);
+  $: completedTodos = todos.filter((todo) => todo.completed).length;
 
   const generateRandomId = (): string => {
     return Math.random().toString(16).slice(2);
@@ -70,6 +72,10 @@
         return todos.filter((todo) => todo.completed);
     }
   };
+
+  const clearCompleted = (): void => {
+    todos = todos.filter((todo) => todo.completed !== true);
+  };
 </script>
 
 <main>
@@ -99,8 +105,10 @@
           selectedFilter="{selectedFilter}"
           setFilter="{setFilter}"
         />
-
-        <button class="clear-completed">Clear completed</button>
+        <ClearTodos
+          clearCompleted="{clearCompleted}"
+          completedTodos="{completedTodos}"
+        />
       </div>
     {/if}
   </section>
