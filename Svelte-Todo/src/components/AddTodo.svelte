@@ -9,10 +9,10 @@
 
   let todo = "";
 
-  function handleSubmit() {
+  const handleSubmit = () => {
     addTodo(todo);
     todo = "";
-  }
+  };
 </script>
 
 <form on:submit|preventDefault="{handleSubmit}">
