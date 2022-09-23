@@ -65,10 +65,15 @@
 
   .new-todo {
     width: 100%;
+    height: 40px;
     padding: var(--spacing-16);
     padding-left: 60px;
     font-size: var(--font-24);
     border: none;
     border-bottom: 1px solid var(--shadow-1);
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
   }
 </style>
