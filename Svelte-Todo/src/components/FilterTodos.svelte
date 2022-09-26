@@ -6,7 +6,7 @@
   export let selectedFilter: FiltersType;
   export let setFilter: SetFilterType;
 
-  let filters = ["all", "active", "completed"];
+  let filters = ["All", "Active", "Completed"];
 </script>
 
 <div class="filters">
@@ -28,14 +28,23 @@
   }
 
   .filter {
-    text-transform: capitalize;
-    padding: var(--spacing-4) var(--spacing-8);
-    border: 1px solid transparent;
-    border-radius: var(--radius-base);
+    border: none;
+    padding: 8px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    background-color: #e7e7e7;
+    color: black;
+    border-radius: 4px;
+    transition-duration: 0.4s;
+    margin-right: 10px;
   }
 
   .filter:hover {
     border: 1px solid var(--color-highlight);
+    background-color: #555555;
+    color: white;
   }
 
   .selected {
