@@ -1,16 +1,20 @@
 <script lang="ts">
+  import { supabase } from "$root/supabaseDates";
+
   type AddTodoType = (todo: string) => void;
   type ToggleCompletedType = (event: MouseEvent) => void;
   type TodosAmountType = number;
 
-  export let addTodo: AddTodoType;
+  export let addTodo;
   export let toggleCompleted: ToggleCompletedType;
   export let todosAmount: TodosAmountType;
 
   let todo = "";
+  const handleSubmit = async () => {
+    const { error } = await supabase.from("todos").insert([{ name: todo }]);
+    if (error) throw console.error(error);
+    await addTodo(todo);
 
-  const handleSubmit = () => {
-    addTodo(todo);
     todo = "";
   };
 </script>
@@ -38,31 +42,6 @@
 </form>
 
 <style>
-  .toggle-all {
-    width: 1px;
-    height: 1px;
-    position: absolute;
-    opacity: 0;
-  }
-
-  .toggle-all + label {
-    position: absolute;
-    font-size: 0;
-  }
-
-  .toggle-all + label:before {
-    content: "❯";
-    display: block;
-    padding: var(--spacing-16);
-    font-size: var(--font-24);
-    color: var(--color-gray-58);
-    transform: rotate(90deg);
-  }
-
-  .toggle-all:checked + label:before {
-    color: var(--color-gray-28);
-  }
-
   .new-todo {
     width: 100%;
     height: 40px;

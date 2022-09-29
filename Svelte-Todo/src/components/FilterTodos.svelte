@@ -6,7 +6,7 @@
   export let selectedFilter: FiltersType;
   export let setFilter: SetFilterType;
 
-  let filters = ["All", "Active", "Completed"];
+  let filters = ["all", "active", "completed"];
 </script>
 
 <div class="filters">

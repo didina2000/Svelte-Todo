@@ -23,7 +23,9 @@
     "vite": "^3.0.7"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.0.0-rc.10",
     "bulma": "^0.9.4",
+    "dotenv": "^16.0.2",
     "rollup-plugin-postcss": "^4.0.2",
     "svelma": "^0.4.5"
   }
