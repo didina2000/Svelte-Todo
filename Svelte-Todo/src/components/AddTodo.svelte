@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { supabase } from "$root/supabaseDates";
+  import { supabase } from "../api/supabaseDates";
 
   type AddTodoType = (todo: string) => void;
   type ToggleCompletedType = (event: MouseEvent) => void;
